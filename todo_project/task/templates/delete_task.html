@@ -1,0 +1,52 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button,
+        .delete-btn,
+        .cancel-btn {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: gray;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Are you sure you want to delete "{{ task }}"?</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete</button>
+            <a href="/" class="cancel-btn">Cancel</a>
+        </form>
+    </div>
+</body>
+
+</html>

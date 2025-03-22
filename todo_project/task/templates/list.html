@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #218838;
+        }
+
+        /* Task List */
+        .task-list {
+            margin-top: 20px;
+        }
+
+        .task-item {
+            background: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #28a745;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .task-item:hover {
+            transform: scale(1.02);
+        }
+
+        /* Buttons */
+        .task-item a {
+            text-decoration: none;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .task-item .update-btn {
+            background: #007bff;
+        }
+
+        .task-item .update-btn:hover {
+            background: #0056b3;
+        }
+
+        .task-item .delete-btn {
+            background: #dc3545;
+        }
+
+        .task-item .delete-btn:hover {
+            background: #c82333;
+        }
+
+        /* Completed Task */
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+            opacity: 0.7;
+        }
+
+        /* Delete Confirmation */
+        .delete-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button,
+        .cancel-btn {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: gray;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Do Task</h3>
+
+        <form method="post" action="/">
+            {% csrf_token %}
+            {{ form.title }}
+            <input type="submit" value="Create Task">
+        </form>
+
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task-item {% if task.complete %}completed{% endif %}">
+                <p>{{ task.title }}</p>
+                <div>
+                    <a href="{% url 'update_task' task.id %}" class="update-btn">Update</a>
+                    <a href="{% url 'delete_task' task.id %}" class="delete-btn">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
